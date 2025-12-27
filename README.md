@@ -41,7 +41,6 @@ The system focuses on **quality hiring signals**, not spam applications.
 
 ## 🛠 Tech Stack
 
-
 ### Backend
 - Go (Golang)
 - Gin framework
@@ -49,7 +48,6 @@ The system focuses on **quality hiring signals**, not spam applications.
 - PostgreSQL
 - JWT authentication
 - Docker & Docker Compose
-
 
 ### Frontend
 - React + TypeScript
@@ -60,3 +58,40 @@ The system focuses on **quality hiring signals**, not spam applications.
 - Google OAuth
 
 ---
+
+## 🛠️ Setup & Run Locally
+
+### 📌 Prerequisites
+
+Ensure you have the following installed:
+
+- Git
+- Node.js (v18+)
+- npm
+- Docker & Docker Compose
+- Google Cloud Console account (for OAuth)
+
+---
+
+### 🔑 Google OAuth Setup
+
+1. Go to **Google Cloud Console**
+2. Create a new project
+3. Enable **Google Identity Services**
+4. Create **OAuth 2.0 Client ID**
+   - Application type: Web
+   - Authorized JavaScript origin:
+     ```
+     http://localhost:5173
+     ```
+5. Copy the **Client ID**
+
+---
+
+### 🐳 Backend Setup (Go + PostgreSQL)
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/jobmatch.git
+cd jobmatch
