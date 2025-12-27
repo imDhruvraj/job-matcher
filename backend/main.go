@@ -1,12 +1,30 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
+)
 
 func main() {
-	// Initialize DB (with retry + automigrate)
+	// --------------------
+	// DATABASE
+	// --------------------
 	ConnectDatabase()
 
+	// --------------------
+	// ROUTER
+	// --------------------
 	r := gin.Default()
+
+	// --------------------
+	// CORS (CRITICAL FIX)
+	// --------------------
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+	}))
 
 	// --------------------
 	// AUTH (PUBLIC)
@@ -19,13 +37,13 @@ func main() {
 	r.GET("/candidate/:id/jobs", GetRecommendedJobs)
 
 	// --------------------
-	// PROTECTED ROUTES
+	// PROTECTED ROUTES (JWT)
 	// --------------------
 	auth := r.Group("/")
 	auth.Use(AuthMiddleware())
 
 	// --------------------
-	// CANDIDATE-ONLY ROUTES
+	// CANDIDATE ROUTES
 	// --------------------
 	candidate := auth.Group("/")
 	candidate.Use(RequireRole("candidate"))
@@ -36,7 +54,7 @@ func main() {
 	}
 
 	// --------------------
-	// COMPANY-ONLY ROUTES
+	// COMPANY ROUTES
 	// --------------------
 	company := auth.Group("/")
 	company.Use(RequireRole("company"))

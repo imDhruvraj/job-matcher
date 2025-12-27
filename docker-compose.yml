@@ -17,7 +17,7 @@ services:
     environment:
       DB_URL: postgres://postgres:postgres@db:5432/jobmatch?sslmode=disable
       JWT_SECRET: supersecretkey
-      GOOGLE_CLIENT_ID: your_google_client_id_here
+      GOOGLE_CLIENT_ID: 868108200020-r7qolk6tnoend8rao8lf3kuukeerl003.apps.googleusercontent.com
     ports:
       - "8080:8080"
     volumes:
