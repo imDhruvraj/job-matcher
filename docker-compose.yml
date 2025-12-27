@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: jobmatch
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      DB_URL: postgres://postgres:postgres@db:5432/jobmatch?sslmode=disable
+      JWT_SECRET: supersecretkey
+      GOOGLE_CLIENT_ID: your_google_client_id_here
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend/storage:/app/storage
+
+volumes:
+  db_data:
